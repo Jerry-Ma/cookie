@@ -29,6 +29,7 @@ url:
   help: The url to your GitHub or GitLab repository
   # [[[end]]]
   default: "https://github.com/{{ org }}/{{ project_name }}"
+  when: false
 
 # [[[cog print(cc.full_name.yaml()) ]]]
 full_name:
@@ -65,6 +66,8 @@ license:
     - Apache
     - MIT
   # [[[end]]]
+  default: BSD
+  when: false
 
 # [[[cog print(cc.backend.yaml()) ]]]
 backend:
@@ -81,6 +84,8 @@ backend:
     "Meson-python                   - Compiled C++ (also good)": mesonpy
     "Maturin                        - Compiled Rust (recommended)": maturin
   # [[[end]]]
+  default: setuptools
+  when: false
 
 # [[[cog print(cc.docs.yaml()) ]]]
 docs:
@@ -90,13 +95,16 @@ docs:
     "ProperDocs (MkDocs fork)": properdocs
     "Zensical (alpha)": zensical
   # [[[end]]]
+  default: sphinx
+  when: false
 
 # [[[cog print(cc.vcs.yaml()) ]]]
 vcs:
   type: bool
   help: Use version control for versioning
   # [[[end]]]
-  when: "{{ backend not in ['maturin', 'mesonpy'] }}"
+  default: true
+  when: false
 
 _templates_suffix: ""
 
@@ -105,3 +113,12 @@ _subdirectory: "{% raw %}{{cookiecutter.project_name}}{% endraw %}"
 _jinja_extensions:
   - copier_templates_extensions.TemplateExtensionLoader
   - helpers/extensions.py:CookiecutterNamespace
+
+# Fork: upstream files that are kept in the template but not copied into a
+# project. See FORK.md.
+_exclude:
+  - ".github/workflows"
+  - ".github/zizmor.yml"
+  - "noxfile.py"
+  - ".readthedocs.yaml"
+  - "src/*/example.py"

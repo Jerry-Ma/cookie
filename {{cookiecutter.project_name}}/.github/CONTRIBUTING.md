@@ -5,25 +5,25 @@ description of best practices for developing scientific packages.
 
 # Quick development
 
-The fastest way to start with development is to use nox. If you don't have nox,
-you can use `uvx nox` to run it without installing, or `uv tool install nox`. If
-you don't have uv, you can
+The fastest way to start with development is to use
+[just](https://just.systems). If you don't have just, you can use
+`uvx --from rust-just just` to run it without installing, or
+`uv tool install rust-just`. If you don't have uv, you can
 [install it a variety of ways](https://docs.astral.sh/uv/getting-started/installation/),
 including with pip, pipx, brew, and just downloading the binary (single file).
 
-To use, run `nox`. This will lint and test using every installed version of
-Python on your system, skipping ones that are not installed. You can also run
-specific jobs:
+To use, run `just` to list the recipes. The main ones are:
 
 ```console
-$ nox -s lint  # Lint only
-$ nox -s tests  # Python tests
-$ nox -s docs  # Build and serve the docs
-$ nox -s build  # Make an SDist and wheel
+$ just install  # Create the development environment, activate the commit hook
+$ just qa  # Lint and test
+$ just test  # Python tests
+$ just coverage  # Python tests with a coverage report
+$ just doc  # Build and serve the docs
+$ just build  # Make an SDist and wheel
 ```
 
-Nox handles everything for you, including setting up an temporary virtual
-environment for each run.
+The recipes run through uv in the project's own environment.
 
 # Setting up a development environment manually
 
@@ -35,16 +35,12 @@ uv sync
 
 # Pre-commit
 
-You should prepare pre-commit or prek, which will help you by checking that
-commits pass required checks:
+`just install` points git at the tracked hook in `.githooks/`, which runs
+[prek](https://github.com/j178/prek) on every commit to check that it passes the
+required checks.
 
-```bash
-uv tool install pre-commit # or brew install pre-commit on macOS
-pre-commit install # Will install a pre-commit hook into the git repo
-```
-
-You can also/alternatively run `pre-commit run` (changes only) or
-`pre-commit run --all-files` to check even without installing the hook.
+You can also run `uvx prek run` (changes only) or `uvx prek run --all-files` to
+check without committing.
 
 # Testing
 
@@ -67,11 +63,11 @@ uv run pytest --cov={{ cookiecutter.project_name }}
 You can build and serve the docs using:
 
 ```bash
-nox -s docs
+just doc
 ```
 
 You can build the docs only with:
 
 ```bash
-nox -s docs --non-interactive
+just doc-build
 ```

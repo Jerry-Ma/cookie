@@ -97,3 +97,18 @@ Session names include all three, like `tests(hatch, vcs, sphinx)`.
   `helpers/cog_helpers.py` rewrites `toml`→`ini`); do **not** change the `toml`
   fences in the `src/sp_repo_review/checks/*.py` docstrings, which are rendered
   by repo-review itself, not this site.
+
+## This fork
+
+This repository is a fork of scientific-python/cookie. Branch `v2026` is
+upstream `main` plus one commit that adapts the template; nothing else is
+changed or maintained here.
+
+- Read `FORK.md` for what the fork produces. The design trace (principles, the
+  reason behind each decision, how to verify and sync) is kept outside the
+  repository, in an untracked `design/` folder; read it if it is present.
+- The template is used through copier only, for one combination: setuptools,
+  Sphinx, GitHub. Do not edit cookie's branches or files for other options.
+- Keep cookie's default unless there is a stated reason. Cut cleanly, add
+  minimally, and check every claim by rendering a project and running it.
+- Work one focused area at a time and do not push without the owner's say.

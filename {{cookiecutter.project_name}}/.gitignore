@@ -184,3 +184,17 @@ Thumbs.db
 # Common editor files
 *~
 *.swp
+
+# Fork additions (see FORK.md)
+
+# Stub pages that automodapi generates during a docs build
+docs/api/
+
+# Local design notes
+design/
+
+# pytest-benchmark results
+.benchmarks/
+
+# direnv, which often holds secrets
+.envrc
