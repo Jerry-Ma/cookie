@@ -101,8 +101,9 @@ Session names include all three, like `tests(hatch, vcs, sphinx)`.
 ## This fork
 
 This repository is a fork of scientific-python/cookie. Branch `v2026` is
-upstream `main` plus one commit that adapts the template; nothing else is
-changed or maintained here.
+upstream `main` plus the fork's commits, which are squashed into one before each
+sync with upstream; nothing else is changed or maintained here. Each release is
+a tag `<upstream tag>.post<N>`, and a released tag is never moved.
 
 - Read `FORK.md` for what the fork produces. The design trace (principles, the
   reason behind each decision, how to verify and sync) is kept outside the
