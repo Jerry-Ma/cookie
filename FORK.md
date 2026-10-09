@@ -50,6 +50,11 @@ just install
 
 Replace the placeholder icon `docs/_static/favicon.ico` with the project's own.
 
+Write the project's introduction in `README.md`, below the `SPHINX-START`
+marker: the docs home page shows it from there. Link to a docs page by its path
+in the repository, such as `docs/guide.md`, so the link works on GitHub and in
+the built docs.
+
 ## Work in a project
 
 | Recipe            | What it does                                        |
