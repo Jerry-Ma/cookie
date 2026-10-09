@@ -123,7 +123,9 @@ _exclude:
   - ".readthedocs.yaml"
   - "src/*/example.py"
 
-# Fork: files a project replaces with its own. An update must leave them alone,
-# and copier cannot merge a binary file. See FORK.md.
+# Fork: files a project replaces with its own, which an update leaves alone.
+# copier cannot merge a binary file, and a rewritten README would conflict on
+# every change to the template's.
 _skip_if_exists:
   - "docs/_static/favicon.ico"
+  - "README.md"
