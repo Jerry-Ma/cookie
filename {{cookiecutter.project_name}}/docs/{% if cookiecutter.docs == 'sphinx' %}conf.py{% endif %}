@@ -31,9 +31,6 @@ extensions += [
 # properties of models are left out. Remove this when the extension supports it.
 autodoc_use_legacy_class_based = True
 
-# Resolve references to Pydantic's own API.
-intersphinx_mapping["pydantic"] = ("https://docs.pydantic.dev/latest/", None)
-
 source_suffix = [".rst", ".md"]
 exclude_patterns = [
     "_build",
@@ -58,15 +55,8 @@ myst_enable_extensions = [
 # Markdown link to a heading, such as ``guide.md#some-heading``, fails the build.
 myst_heading_anchors = 3
 
-# pytest runs the `>>>` examples (see pyproject.toml). The Sphinx doctest builder
-# only runs explicit testcode blocks, which is how Markdown guides carry runnable
-# examples, so every example is run by exactly one tool.
-doctest_test_doctest_blocks = ""
-
-# The Astropy default, "obj", turns every single-backtick word into an object
-# reference. Docstrings in numpydoc style put parameter names in single
-# backticks, so with nitpicky checking each of them would fail the build.
-default_role = None
+# Resolve references to Pydantic's own API.
+intersphinx_mapping["pydantic"] = ("https://docs.pydantic.dev/latest/", None)
 
 nitpick_ignore = [
     ("py:class", "_io.StringIO"),
@@ -83,7 +73,17 @@ nitpick_ignore_regex = [
     ("py:obj", r".*\.all fields"),
 ]
 
+# The Astropy default, "obj", turns every single-backtick word into an object
+# reference. Docstrings in numpydoc style put parameter names in single
+# backticks, so with nitpicky checking each of them would fail the build.
+default_role = None
+
 # numpydoc reports malformed docstring sections as Python warnings, which
 # sphinx-build -W does not see. Turn them into errors so they fail the build
 # instead of silently dropping content.
 warnings.filterwarnings("error", category=UserWarning, module=r"numpydoc\.docscrape$")
+
+# pytest runs the `>>>` examples (see pyproject.toml). The Sphinx doctest builder
+# only runs explicit testcode blocks, which is how Markdown guides carry runnable
+# examples, so every example is run by exactly one tool.
+doctest_test_doctest_blocks = ""

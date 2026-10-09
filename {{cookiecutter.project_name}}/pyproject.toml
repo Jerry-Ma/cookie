@@ -113,6 +113,7 @@ Homepage = "{{ cookiecutter.url }}"
 "Bug Tracker" = "{{ cookiecutter.url }}/issues"
 Discussions = "{{ cookiecutter.url }}/discussions"
 Changelog = "{{ cookiecutter.url }}/releases"
+Documentation = "https://{{ cookiecutter.org | lower }}.github.io/{{ cookiecutter.project_name }}/"
 
 [project.scripts]
 {{ cookiecutter.project_name }} = "{{ cookiecutter.__project_slug }}.cli:app"
@@ -239,6 +240,14 @@ pytest-cov = ">= 7"
 [tool.setuptools_scm]
 write_to = "src/{{ cookiecutter.__project_slug }}/_version.py"
 
+[tool.uv]
+# Rebuild the project, and so read its version from git again, when a commit
+# or a tag is added. Without this the installed version keeps its first value.
+cache-keys = [
+  { file = "pyproject.toml" },
+  { git = { commit = true, tags = true } },
+]
+
 {%- endif %}
 
 
@@ -311,8 +320,12 @@ ignore = [
 
 [tool.ruff.lint.flake8-type-checking]
 # Pydantic reads annotations at runtime, so the imports they use must stay real.
-runtime-evaluated-base-classes = ["pydantic.BaseModel"]
-runtime-evaluated-decorators = ["pydantic.validate_call"]
+runtime-evaluated-base-classes = [
+  "pydantic.BaseModel",
+]
+runtime-evaluated-decorators = [
+  "pydantic.validate_call",
+]
 
 [tool.ruff.lint.pydocstyle]
 convention = "numpy"
@@ -357,12 +370,4 @@ exclude_files = [
 ignore = [
   "PY007",  # Task runner: just is not one the check recognises
   "GH100",  # No GitHub Actions workflows by default
-]
-
-[tool.uv]
-# Rebuild the project, and so read its version from git again, when a commit
-# or a tag is added. Without this the installed version keeps its first value.
-cache-keys = [
-  { file = "pyproject.toml" },
-  { git = { commit = true, tags = true } },
 ]
